@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monthly Fire Drill Report</title>
   <style>
+    /* Keep your existing styles - they look good */
     body {
       font-family: Arial, sans-serif;
       max-width: 800px;
@@ -42,6 +43,7 @@
     input[type="text"],
     input[type="date"],
     input[type="time"],
+    input[type="email"],
     textarea {
       width: 100%;
       padding: 8px;
@@ -94,17 +96,30 @@
       border-bottom: 1px solid black;
       height: 40px;
     }
+    
+    /* Added for debugging */
+    .debug-info {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-bottom: 15px;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h1>Monthly Fire Drill Report</h1>
     
-    <form action="https://splitforms.com/api/submit" method="POST">
+    <div class="debug-info" id="debug-info"></div>
+    
+    <form action="https://splitforms.com/submit" method="POST" id="fireDrillForm">
       <!-- SplitForms required fields -->
       <input type="hidden" name="_to" value="sgwelsh@hazelwoodmo.org">
       <input type="hidden" name="_access_code" value="28654fbbc1c740ed94311c50e19351cd">
       <input type="hidden" name="_subject" value="Monthly Fire Drill Report">
+      <input type="hidden" name="_from_name" value="Fire Drill Report System">
       
       <div class="form-group">
         <label for="schoolName">School/Business Name</label>
@@ -140,12 +155,12 @@
       
       <div class="form-group">
         <label for="occupantsCount">Number of Occupants Evacuated</label>
-        <input type="number" id="occupantsCount" name="occupantsCount" required>
+        <input type="text" id="occupantsCount" name="occupantsCount" required>
       </div>
       
       <div class="form-group">
         <label for="evacuationTime">Total Time for Evacuation (Seconds)</label>
-        <input type="number" id="evacuationTime" name="evacuationTime" required>
+        <input type="text" id="evacuationTime" name="evacuationTime" required>
       </div>
       
       <div class="form-group">
@@ -165,5 +180,16 @@
       Please submit form to Hazelwood Fire Department or email firemarshal@hazelwoodmo.org
     </div>
   </div>
+
+  <script>
+    // Form validation and submission handling
+    document.getElementById('fireDrillForm').addEventListener('submit', function(e) {
+      // Debug info - can be enabled by changing .debug-info display to block
+      const debugInfo = document.getElementById('debug-info');
+      debugInfo.textContent = 'Form is being submitted to: https://splitforms.com/submit';
+      
+      // Form will submit normally if validation passes
+    });
+  </script>
 </body>
 </html>
