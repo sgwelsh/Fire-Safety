@@ -114,7 +114,7 @@
       <input type="hidden" name="_subject" value="Monthly Fire Drill Report">
       
       <!-- Timezone tracking fields -->
-      <input type="hidden" id="timezone" name="timezone" value="">
+      <input type="hidden" id="timezone" name="timezone" value="CST">
       <input type="hidden" id="utc_drill_time" name="utc_drill_time" value="">
       
       <div class="form-group">
@@ -139,9 +139,9 @@
         </div>
         
         <div class="form-group">
-          <label for="drillTime">Time</label>
+          <label for="drillTime">Time (CST)</label>
           <input type="time" id="drillTime" name="drillTime" required>
-          <div class="timezone-info" id="timezoneInfo">Local time will be recorded</div>
+          <div class="timezone-info" id="timezoneInfo">Please enter time in Central Standard Time</div>
         </div>
       </div>
       
@@ -179,13 +179,13 @@
   </div>
 
   <script>
-    // Get user's timezone
     document.addEventListener('DOMContentLoaded', function() {
       const timezoneField = document.getElementById('timezone');
       const timezoneInfo = document.getElementById('timezoneInfo');
-      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      timezoneField.value = userTimezone;
-      timezoneInfo.textContent = `Local time (${userTimezone}) will be recorded`;
+      
+      // Set timezone to CST
+      timezoneField.value = 'CST';
+      timezoneInfo.textContent = 'Please enter time in Central Standard Time (CST)';
       
       // Update UTC time when form is submitted
       document.getElementById('drillReportForm').addEventListener('submit', function() {
@@ -193,8 +193,8 @@
         const timeInput = document.getElementById('drillTime').value;
         
         if (dateInput && timeInput) {
-          // Combine date and time strings
-          const combinedDateTime = new Date(dateInput + 'T' + timeInput);
+          // Combine date and time strings as CST
+          const combinedDateTime = new Date(dateInput + 'T' + timeInput + '-06:00');
           
           // Convert to UTC
           const utcDateTime = new Date(combinedDateTime.toISOString());
